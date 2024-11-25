@@ -385,7 +385,7 @@ class VirtualDesktop():
             fallback = VirtualDesktop(1)
         managers.manager_internal.RemoveDesktop(self._virtual_desktop, fallback._virtual_desktop) # type: ignore
 
-    def go(self, allow_set_foreground: bool = True):
+    def go(self, animation, allow_set_foreground: bool = True):
         """Switch to this virtual desktop.
 
         Args:
@@ -396,7 +396,7 @@ class VirtualDesktop():
         """
         if allow_set_foreground:
             windll.user32.AllowSetForegroundWindow(ASFW_ANY)
-        managers.manager_internal.switch_desktop(self._virtual_desktop) # type: ignore
+        managers.manager_internal.switch_desktop(self._virtual_desktop, animation) # type: ignore
 
     def apps_by_z_order(self, include_pinned: bool = True) -> List[AppView]:
         """Get a list of AppViews, ordered by their Z position, with

@@ -323,9 +323,12 @@ class IVirtualDesktopManagerInternal(IUnknown):
         else:
             return self.CreateDesktopW() # type: ignore
 
-    def switch_desktop(self, target: IVirtualDesktop) -> IVirtualDesktop:
+    def switch_desktop(self, target: IVirtualDesktop, animation) -> IVirtualDesktop:
         if build.OVER_22621:
-            return self.SwitchDesktop(target) # type: ignore
+            if animation:
+                return self.SwitchDesktopWithAnimation(target) # type: ignore
+            else:
+                return self.SwitchDesktop(target) # type: ignore
         elif build.OVER_20231:
             return self.SwitchDesktop(0, target) # type: ignore
         else:
